@@ -1,2 +1,4 @@
 # SM-NT-Zombies
-Sourcemod plugin for Neotokyo that enables a basic zombie game mode
+Sourcemod plugin for Neotokyo that enables a basic zombie game mode  
+
+`sm_zombies` to toggle on/off.
