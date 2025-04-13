@@ -20,6 +20,7 @@ public Plugin myinfo = {
 
 public void OnPluginStart()
 {
+	//HookEvent("game_round_start", OnRoundStart, EventHookMode_Post);
 	HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
 	RegAdminCmd("sm_zombies", CommandZombies, ADMFLAG_GENERIC);
 }
@@ -84,7 +85,16 @@ void OnPlayerSpawnPost(int userid)
 		return;
 	}
 	
-	SetEntityHealth(client, 500);
+	int nsfCount = GetTeamClientCount(TEAM_NSF);
+	
+	if(nsfCount >= 10)
+	{
+		SetEntityHealth(client, 750); // scale by nsf count, and jinrai count?
+	}
+	else if(nsfCount >= 2)
+	{
+		SetEntityHealth(client, 200 + (nsfCount - 1) * 50);
+	}
 	
 	StripPlayerWeapons(client, false);
 	
@@ -94,4 +104,8 @@ void OnPlayerSpawnPost(int userid)
 	{
 		AcceptEntityInput(wepKnife, "use", client, client);
 	}
+	
+	SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", 1.33);
 }
+
+//public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
